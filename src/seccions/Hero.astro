@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+import Container from "../components/Container.astro";
+import Tag from "../components/Tag.astro";
+import Button from "../components/Button.astro";
+---
+
+<Container id="hero">
+  <div class="flex flex-col justify-center items-center gap-3">
+    <Tag />
+    <h1
+      class="text-3xl md:text-5xl font-black bg-gradient-to-r from-green-600 to-green-500 pb-2 bg-clip-text text-transparent"
+    >
+      Hola! <span class="inline-block sm:inline-flex">Soy Brian Chaparro</span>
+      <h2 class="text-pretty text-lg text-green-300">
+        Desarrollador Web Dedicado a Convertir Ideas en Código Funcional.
+      </h2>
+    </h1>
+
+    <div
+      class="flex flex-col md:flex-row justify-center gap-12 md:gap-6 items-center"
+    >
+      <div class="flex flex-col justify-center gap-3 items-center">
+        <p class="text-balance text-white/80 text-xl leading-6">
+          Motivado por el desafío de llevar conceptos a la vida digital, me
+          enfoco en encontrar soluciones prácticas y efectivas para problemas de
+          desarrollo. Busco mi primera oportunidad profesional para aplicar mi
+          enfoque en resolver problemas y seguir aprendiendo en un entorno real.
+        </p>
+        <div class="flex gap-3">
+          <Button href="#proyectos" variant="primary"> Ver Proyectos </Button>
+          <Button href="#contacto" variant="secondary"> Contáctame </Button>
+        </div>
+      </div>
+
+      <Image
+        src="/programming.svg"
+        alt="Imagen de un desarrollador trabajando"
+        width="363"
+        height="250"
+      />
+    </div>
+  </div>
+</Container>

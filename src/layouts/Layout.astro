@@ -15,11 +15,7 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
-  <body class="relative h-full w-full bg-neutral-900">
-    <div
-      class="absolute inset-0 bg-fuchsia-500 bg-[size:20px_20px] opacity-20 blur-[100px]"
-    >
-    </div>
+  <body class="relative h-full w-full bg-neutral-800">
     <slot />
   </body>
 </html>

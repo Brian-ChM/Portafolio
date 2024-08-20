@@ -1,0 +1,25 @@
+---
+type Props = {
+  variant?: "primary" | "secondary";
+  href: string;
+  target?: "_blank";
+};
+
+const { variant = "primary", href, target }: Props = Astro.props;
+
+const baseClasses =
+  "border text-white/80 font-semibold py-2 px-4 rounded-lg transition-colors";
+const primaryClasses = "border-blue-500 hover:bg-blue-800";
+const secondaryClasses = "border-green-500 hover:bg-green-800";
+
+const classes =
+  variant === "secondary"
+    ? `${baseClasses} ${secondaryClasses}`
+    : `${baseClasses} ${primaryClasses}`;
+
+const relAttr = target === "_blank" ? "noopener noreferrer" : undefined;
+---
+
+<a href={href} class={classes} target={target} rel={relAttr}>
+  <slot />
+</a>

@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets";
+import Container from "../components/Container.astro";
+import Tittle from "../components/Tittle.astro";
+---
+
+<Container id="contacto">
+  <Tittle>Contacto</Tittle>
+
+  <div class="flex flex-col md:flex-row gap-3 w-full">
+    <div class="flex flex-col flex-1 gap-3 w-full items-center">
+      <p
+        class="max-w-[70ch] text-start text-xl md:text-2xl font-semibold mb-5 md:mb-24"
+      >
+        Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarme.
+      </p>
+
+      <div class="flex gap-3 w-full">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="mailto:brianmarecco@gmail.com"
+          class="text-gray-300 flex items-center gap-3 hover:underline"
+        >
+          <Image src="/gmail.svg" alt="Email" width="25" height="25" />
+          <h6 class="text-lg md:text-xl font-semibold text-cyan-500">
+            brianmarecco@gmail.com
+          </h6>
+        </a>
+      </div>
+
+      <div class="flex gap-3 w-full">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="http://github.com/Brian-ChM"
+          class="text-gray-300 flex items-center gap-3 hover:underline"
+        >
+          <Image src="/github.svg" alt="GitHub" width="25" height="25" />
+          <h6 class="text-lg md:text-xl font-semibold text-cyan-500">GitHub</h6>
+        </a>
+      </div>
+    </div>
+
+    <hr class="w-full md:hidden border-gray-600 my-10 md:my-20" />
+
+    <form
+      id="contact-form"
+      class="flex flex-1 flex-col gap-3 justify-center items-center"
+    >
+      <p class="text-lg text-center mb-5 text-balance">
+        Tambien puedes enviarme un mensaje si tienes alguna pregunta o necesitas
+        ayuda. Estoy aquí para ayudarte lo más posible.
+      </p>
+      <div class="flex flex-col gap-3 w-full">
+        <label for="email" class="text-sm font-semibold text-start">
+          Email
+        </label>
+        <input
+          class="rounded-md border border-gray-600 px-4 py-2 text-sm w-full"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="jhon@example.com"
+          required
+        />
+      </div>
+      <div class="flex flex-col gap-3 w-full">
+        <label for="message" class="text-sm font-semibold text-start">
+          Mensaje
+        </label>
+        <textarea
+          class="rounded-md border border-gray-600 px-4 py-2 text-sm w-full"
+          rows="10"
+          id="message"
+          name="message"
+          placeholder="Hola, ¿cómo estás?"
+          required></textarea>
+      </div>
+      <button
+        type="submit"
+        class="bg-blue-500 w-full flex items-center justify-center gap-2 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+      >
+        <Image
+          src="/contact-papperplane-communication.svg"
+          alt="Enviar"
+          width="20"
+          height="20"
+        />
+        Enviar</button
+      >
+    </form>
+  </div>
+</Container>
