@@ -27,12 +27,14 @@ import Button from "../components/Button.astro";
           desarrollo. Busco mi primera oportunidad profesional para aplicar mi
           enfoque en resolver problemas y seguir aprendiendo en un entorno real.
         </p>
-        <div class="flex gap-3">
+        <div class="flex flex-col flex-wrap sm:flex-row gap-3">
           <Button href="#proyectos" variant="primary"> Ver Proyectos </Button>
-          <Button target="_blank" variant="secondary" href="/resume">
-            Abrir CV
-          </Button>
-          <Button href="#contacto" variant="secondary"> Contáctame </Button>
+          <div class="flex gap-3">
+            <Button target="_blank" variant="secondary" href="/resume">
+              Abrir CV
+            </Button>
+            <Button href="#contacto" variant="secondary"> Contáctame </Button>
+          </div>
         </div>
       </div>
 
