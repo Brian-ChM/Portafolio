@@ -8,9 +8,9 @@ type Props = {
 const { variant = "primary", href, target }: Props = Astro.props;
 
 const baseClasses =
-  "border text-white/80 font-semibold py-2 px-4 rounded-lg transition-colors text-center";
-const primaryClasses = "border-blue-500 hover:bg-blue-800";
-const secondaryClasses = "border-green-500 hover:bg-green-800";
+  "border text-white/80 text-sm text-nowrap font-semibold py-2 px-4 rounded-lg transition-colors text-center w-full";
+const primaryClasses = "border-blue-500 hover:bg-blue-800 bg-blue-900";
+const secondaryClasses = "border-green-500 hover:bg-green-800 bg-green-900";
 
 const classes =
   variant === "secondary"
