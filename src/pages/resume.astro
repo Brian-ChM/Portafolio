@@ -228,33 +228,12 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </section>
 
-    <button
+    <a
+      href="/cv/Brian_Chaparro.pdf"
       class="fixed bottom-8 right-8 p-4 w-min h-min bg-green-500 shadow-xl text-white rounded-full print:hidden"
+      download
     >
       <Download class="w-10 h-10 font-bold" />
-    </button>
+    </a>
   </main>
 </Layout>
-
-<script>
-  const printButton = document.querySelector("button");
-
-  (printButton as HTMLButtonElement).addEventListener("click", () => {
-    window.print();
-  });
-</script>
-
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
-  main {
-    font-family: "Open Sans", sans-serif;
-  }
-
-  @media print {
-    @page {
-      size: A4;
-      margin: auto;
-    }
-  }
-</style>
