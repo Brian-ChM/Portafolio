@@ -4,7 +4,7 @@
   </button>
 
   <ul
-    id="menu-items"
+    id="burger-items"
     class="absolute remove -z-50 top-14 right-0 space-y-4 p-8 rounded-lg bg-white shadow-md"
   >
     <li class="group">
@@ -53,8 +53,8 @@
 
 <script>
   const menu = document.querySelector("#menu")!;
-  const menuItems = document.querySelector("#menu-items")!;
-  const menuLinks = document.querySelectorAll("#menu-items li");
+  const menuItems = document.querySelector("#burger-items")!;
+  const menuLinks = document.querySelectorAll("#burger-items li");
 
   menu.addEventListener("click", () => {
     if (menuItems.classList.contains("remove")) {
@@ -80,12 +80,12 @@
       opacity 0.2s ease;
   }
 
-  #menu-items.remove {
+  #burger-items.remove {
     opacity: 0;
     transform: translateY(-100px);
   }
 
-  #menu-items:not(.remove) {
+  #burger-items:not(.remove) {
     opacity: 1;
     transform: translateY(0px);
   }
