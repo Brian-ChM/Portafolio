@@ -1,0 +1,55 @@
+<ul
+  id="menu-items"
+  class="gap-4 items-center px-4 hidden sm:flex transition-transform -translate-x-full"
+>
+  <li class="group">
+    <a
+      href="#intro"
+      class="hover:text-blue-700 transition-colors font-medium text-blue-600"
+      >Inicio</a
+    >
+    <div
+      class="h-min border-t-2 border-blue-600 scale-100 group-hover:scale-100 transition-all"
+    >
+    </div>
+  </li>
+  <li class="group">
+    <a
+      href="#projects"
+      class="hover:text-gray-900 transition-colors font-medium">Proyectos</a
+    >
+    <div
+      class="h-min border-t-2 border-blue-600 scale-0 group-hover:scale-100 transition-all"
+    >
+    </div>
+  </li>
+  <li class="group">
+    <a href="#skills" class="hover:text-gray-900 transition-colors font-medium"
+      >Habilidades</a
+    >
+    <div
+      class="h-min border-t-2 border-blue-600 scale-0 group-hover:scale-100 transition-all"
+    >
+    </div>
+  </li>
+  <li class="group">
+    <a href="#contact" class="hover:text-gray-900 transition-colors font-medium"
+      >Contacto</a
+    >
+    <div
+      class="h-min border-t-2 border-blue-600 scale-0 group-hover:scale-100 transition-all"
+    >
+    </div>
+  </li>
+</ul>
+
+<script>
+  document.addEventListener("scroll", () => {
+    if (window.scrollY < 300) {
+      document.getElementById("menu-items")!.style.transform =
+        "translateX(-100%)";
+    } else {
+      document.getElementById("menu-items")!.style.transform = "translateX(0)";
+    }
+  });
+</script>

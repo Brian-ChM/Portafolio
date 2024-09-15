@@ -1,49 +1,36 @@
 ---
-import { Image } from "astro:assets";
 import Container from "../components/Container.astro";
-import Tag from "../components/Tag.astro";
-import Button from "../components/Button.astro";
 ---
 
-<Container id="hero">
-  <div class="flex flex-col justify-center items-center gap-3">
-    <Tag />
-    <h1
-      class="text-3xl md:text-5xl font-black bg-gradient-to-r from-green-600 to-green-500 pb-2 bg-clip-text text-transparent"
-    >
-      Hola! <span class="inline-block sm:inline-flex">Soy Brian Chaparro</span>
-      <h2 class="text-pretty text-lg text-green-300">
-        Desarrollador Web Dedicado a Convertir Ideas en Código Funcional.
+<Container id="intro" class="min-h-screen justify-center">
+  <div class="grid grid-cols-[auto,1fr] gap-4 items-center">
+    <img
+      class="rounded-full w-24 h-24 object-cover"
+      src="/Brian.jpg"
+      alt="Brian Chaparro"
+    />
+    <div>
+      <h1
+        class="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent"
+      >
+        Brian Chaparro
+      </h1>
+      <h2 class="text-lg sm:text-xl italic text-green-600">
+        Desarrollador Web Front-end
       </h2>
-    </h1>
-
-    <div
-      class="flex flex-col md:flex-row justify-center gap-12 md:gap-6 items-center"
-    >
-      <div class="flex flex-col justify-center gap-3 items-center">
-        <p class="text-balance text-white/80 text-base md:text-xl leading-6">
-          Motivado por el desafío de llevar conceptos a la vida digital, me
-          enfoco en encontrar soluciones prácticas y efectivas para problemas de
-          desarrollo. Busco mi primera oportunidad profesional para aplicar mi
-          enfoque en resolver problemas y seguir aprendiendo en un entorno real.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 max-w-md w-full gap-3">
-          <Button href="#proyectos" variant="primary"> Ver Proyectos </Button>
-          <div class="flex gap-3 w-full">
-            <Button target="_blank" variant="secondary" href="/resume">
-              Abrir CV
-            </Button>
-            <Button href="#contacto" variant="secondary"> Contáctame </Button>
-          </div>
-        </div>
-      </div>
-
-      <Image
-        src="/programming.svg"
-        alt="Imagen de un desarrollador trabajando"
-        width="363"
-        height="250"
-      />
     </div>
+  </div>
+
+  <div class="flex flex-col gap-4 max-w-[75ch] text-lg">
+    <p>
+      He trabajado creando interfaces modernas con React, Next.js y Astro, y
+      también en el backend con Node.js, Prisma y PostgreSQL. Me apasiona
+      construir aplicaciones que resuelvan problemas reales.
+    </p>
+
+    <p>
+      Me enfoco en optimizar la experiencia del usuario y mejorar continuamente
+      con cada proyecto en el que trabajo.
+    </p>
   </div>
 </Container>

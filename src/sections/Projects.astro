@@ -1,0 +1,43 @@
+---
+import CardProject from "../components/CardProject.astro";
+import Container from "../components/Container.astro";
+import Title from "../components/Title.astro";
+---
+
+<Container id="projects">
+  <Title>Proyectos</Title>
+  <div class="flex flex-col md:flex-row gap-8">
+    <CardProject
+      title="Editor de Markdown"
+      description="Un editor de Markdown avanzado que permite a los usuarios autenticarse, escribir, guardar, editar y gestionar documentos Markdown. La aplicación es completamente responsiva y ofrece una experiencia de usuario fluida."
+      image="/MarkdownEditor.webp"
+      tags={[
+        "Next.Js",
+        "TypeScript",
+        "PostgreSQL",
+        "Prisma",
+        "Auth.Js",
+        "Zustand",
+      ]}
+      code="https://github.com/BrianChaparroR/markdown-editor"
+      page="https://markdown-editor.vercel.app/"
+    />
+
+    <CardProject
+      title="TaskCore"
+      description="Una aplicación de gestión de tareas con un dashboard interactivo para añadir, gestionar y visualizar tareas con diferentes estados y prioridades. Incluye una página de estadísticas para el análisis de datos."
+      image="/TaskCore.webp"
+      tags={[
+        "Next.Js",
+        "TypeScript",
+        "PostgreSQL",
+        "Prisma",
+        "Auth.Js",
+        "Zustand",
+        "Zod",
+      ]}
+      code="https://github.com/BrianChaparroR/markdown-editor"
+      page="https://markdown-editor.vercel.app/"
+    />
+  </div>
+</Container>

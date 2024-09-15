@@ -1,0 +1,124 @@
+---
+import Container from "../components/Container.astro";
+import Title from "../components/Title.astro";
+---
+
+<Container id="contact">
+  <Title>Contacto</Title>
+  <div class="flex flex-col gap-4 p-8 rounded-lg bg-white shadow-md">
+    <h5 class="text-xl font-bold text-gray-700">
+      Si tienes alguna pregunta o necesitas ayuda con tu proyecto, no dudes en
+      contactarme.
+    </h5>
+
+    <div class="flex flex-col sm:flex-row gap-16">
+      <div class="flex flex-col gap-4 mt-4 w-80">
+        <a
+          href="mailto:brianmarecco@gmail.com"
+          class="text-blue-500 flex gap-2 items-center"
+        >
+          <img src="/logos/gmail.svg" alt="Email" class="w-6 h-6" />
+          Enviar Mensaje
+        </a>
+        <a
+          href="https://github.com/Brian-ChM"
+          target="_blank"
+          class="text-blue-500 flex gap-2 items-center"
+        >
+          <img src="/logos/github.svg" alt="Github" class="w-6 h-6" />
+          Github
+        </a>
+      </div>
+
+      <form action="" id="contact-form" class="flex flex-col w-full gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="name" class="text-sm font-medium text-gray-700"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            name="name"
+            id="name"
+            class="w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="email" class="text-sm font-medium text-gray-700"
+            >Email</label
+          >
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="message" class="text-sm font-medium text-gray-700"
+            >Mensaje</label
+          >
+          <textarea
+            name="message"
+            id="message"
+            rows="5"
+            class="w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full rounded-lg bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        >
+          Enviar
+        </button>
+      </form>
+    </div>
+  </div>
+</Container>
+
+<script>
+  document
+    .getElementById("contact-form")!
+    .addEventListener("submit", async function (event: Event) {
+      event.preventDefault();
+
+      const form = event.target as HTMLFormElement;
+      const name = (form.querySelector("#name") as HTMLInputElement).value;
+      const email = (form.querySelector("#email") as HTMLInputElement).value;
+      const message = (form.querySelector("#message") as HTMLTextAreaElement)
+        .value;
+
+      const data = {
+        name: name,
+        email: email,
+        message: message,
+      };
+
+      try {
+        const response = await fetch("/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          alert("Mensaje enviado exitosamente");
+          form.reset();
+        } else {
+          const errorData = await response.json();
+          alert(
+            `Error al enviar el mensaje: ${errorData.message || response.statusText}`
+          );
+        }
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
+        alert(
+          "Hubo un problema al enviar el formulario. Por favor, intenta de nuevo más tarde."
+        );
+      }
+    });
+</script>

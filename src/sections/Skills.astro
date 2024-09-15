@@ -1,0 +1,171 @@
+---
+import Container from "../components/Container.astro";
+import Title from "../components/Title.astro";
+---
+
+<Container id="skills" class="min-h-screen">
+  <Title>Habilidades</Title>
+
+  <div class="flex flex-col gap-24 overflow-hidden max-w-[90vw] mask">
+    <ul class="flex gap-24 marquee-first">
+      <img
+        src="/logos/astro.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/nextjs.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/react.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/typescript.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/nodejs.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+
+      <img
+        src="/logos/astro.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/nextjs.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/react.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/typescript.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/nodejs.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/astro.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+    </ul>
+
+    <ul class="flex gap-24 marquee-second">
+      <img
+        src="/logos/postgresql.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/github.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/git.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/docker.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/prisma.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/zod.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+
+      <img
+        src="/logos/postgresql.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/github.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/git.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/docker.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/prisma.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+      <img
+        src="/logos/zod.svg"
+        alt="Astro"
+        class="w-auto h-28 object-contain"
+      />
+    </ul>
+  </div>
+</Container>
+
+<style>
+  .mask {
+    mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 1) 90%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
+  .marquee-first {
+    animation: first_scrolling 20s linear infinite;
+  }
+
+  .marquee-second {
+    animation: second_scrolling 20s linear infinite;
+  }
+
+  @keyframes first_scrolling {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-1007px);
+    }
+  }
+
+  @keyframes second_scrolling {
+    0% {
+      transform: translateX(-1257px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+</style>
