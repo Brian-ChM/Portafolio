@@ -7,17 +7,28 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  "http://localhost:4321",
+  "https://brianchaparro.vercel.app",
+];
+
+app.disable("x-powered-by");
+
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Permitir solicitudes desde cualquier origen
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept",
   );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Methods", "POST");
 
-  // Responder a solicitudes OPTIONS (preflight request)
   if (req.method === "OPTIONS") {
-    return res.sendStatus(204); // Enviar respuesta exitosa sin contenido
+    return res.sendStatus(204);
   }
 
   next();
@@ -26,12 +37,10 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.post("/contact", (req, res) => {
-  const { email, message } = req.body;
+  const { name, email, message } = req.body;
 
-  if (!email || !message) {
-    return res
-      .status(400)
-      .json({ error: "El email y el mensaje son obligatorios" });
+  if (!email || !message || !name) {
+    return res.status(400).json({ error: "Todos los campos son obligatorios" });
   }
 
   const transporter = nodemailer.createTransport({
@@ -46,7 +55,7 @@ app.post("/contact", (req, res) => {
     from: "brianmarecco@gmail.com",
     to: ["brchm.dev@gmail.com"],
     subject: "Portafolio - Mensaje de contacto",
-    text: `Email: ${email}\nMensaje: ${message}`,
+    text: `Nombre: ${name}\nEmail: ${email}\nMensaje: ${message}`,
   };
 
   transporter.sendMail(mailOptions, (error) => {
