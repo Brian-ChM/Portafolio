@@ -1,14 +1,22 @@
 ---
-import BurgerMenu from "./BurgerMenu.astro";
-import Menu from "./Menu.astro";
+import MenuLarge from "./MenuLarge.astro";
+import MenuSmall from "./MenuSmall.astro";
+
+const menuItems = [
+  { name: "Inicio", href: "#intro" },
+  { name: "Proyectos", href: "#projects" },
+  { name: "Habilidades", href: "#skills" },
+  { name: "Contacto", href: "#contact" },
+];
 ---
 
 <nav
-  id="nav"
-  class="fixed inset-0 z-50 rounded-full h-[66px] p-2 w-[calc(100%-32px)] lg:w-full mx-auto max-w-screen-lg flex justify-between items-center border bg-white shadow-md mt-2"
+  id="navbar"
+  class="flex items-center justify-between fixed z-50 left-0 right-0 mx-auto top-2 rounded-full p-2 h-[66px] w-[calc(100%-44px)] lg:w-full max-w-screen-lg border bg-white shadow-md"
 >
+  <!-- Info  -->
   <div
-    id="nav-info"
+    id="navbarInfo"
     class="grid grid-cols-[auto,1fr] gap-2 items-center scale-0 opacity-0 transition-all"
   >
     <img
@@ -28,20 +36,53 @@ import Menu from "./Menu.astro";
     </div>
   </div>
 
-  <Menu />
-  <BurgerMenu />
+  <!-- Welcome -->
+  <h2
+    id="welcome"
+    class="absolute transition-all left-5 text-2xl text-nowrap font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent"
+  >
+    <span class="font-normal text-white greetingHands">👋</span> Bienvenido
+  </h2>
+
+  <!-- Menu large -->
+  <MenuLarge menuItems={menuItems} />
+
+  <!-- Menu small -->
+  <MenuSmall menuItems={menuItems} />
 </nav>
 
 <script>
-  const navInfo = document.getElementById("nav-info")!;
-
+  /* Navbar info */
   document.addEventListener("scroll", () => {
     if (window.scrollY > 300) {
-      navInfo.style.opacity = "1";
-      navInfo.style.transform = "scale(1)";
+      document.getElementById("welcome")!.style.opacity = "0";
+      document.getElementById("welcome")!.style.transform = "translateY(-100%)";
+      document.getElementById("navbarInfo")!.style.opacity = "1";
+      document.getElementById("navbarInfo")!.style.transform = "scale(1)";
     } else {
-      navInfo.style.opacity = "0";
-      navInfo.style.transform = "scale(0)";
+      document.getElementById("navbarInfo")!.style.opacity = "0";
+      document.getElementById("navbarInfo")!.style.transform = "scale(0)";
+      document.getElementById("welcome")!.style.opacity = "1";
+      document.getElementById("welcome")!.style.transform = "translateY(0)";
     }
   });
 </script>
+
+<style>
+  .greetingHands {
+    display: inline-block;
+    animation: greetingHands 1.5s ease-in-out infinite;
+  }
+
+  @keyframes greetingHands {
+    0% {
+      transform: rotate(10deg);
+    }
+    50% {
+      transform: rotate(-10deg);
+    }
+    100% {
+      transform: rotate(10deg);
+    }
+  }
+</style>

@@ -1,0 +1,19 @@
+---
+const { menuItems } = Astro.props;
+---
+
+<ul id="menuLarge" class="px-4 hidden sm:inline-flex gap-4">
+  {
+    menuItems.map((item: { name: string; href: string }) => (
+      <li class="group w-min">
+        <a
+          href={item.href}
+          class="group-hover:text-blue-700 transition-colors font-medium text-gray-700"
+        >
+          {item.name}
+        </a>
+        <div class="h-min border-t-2 border-blue-600 scale-0 group-hover:scale-100 transition-all" />
+      </li>
+    ))
+  }
+</ul>

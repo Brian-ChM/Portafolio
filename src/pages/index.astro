@@ -1,5 +1,6 @@
 ---
 import Navbar from "../components/Navbar.astro";
+import NavbarV2 from "../components/Navbar.astro";
 import Layout from "../layouts/Layout.astro";
 import Contact from "../sections/Contact.astro";
 import Hero from "../sections/Hero.astro";
@@ -18,3 +19,53 @@ import Skills from "../sections/Skills.astro";
     <Contact />
   </main>
 </Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section");
+    const menuLarge = document.querySelectorAll("#menuLarge a");
+    const menuSmall = document.querySelectorAll("#menuSmall a");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const sectionId = entry.target.getAttribute("id");
+
+          if (entry.isIntersecting) {
+            menuLarge.forEach((link) => {
+              if (link.getAttribute("href") === `#${sectionId}`) {
+                link.classList.remove("text-gray-700");
+                link.classList.add("text-blue-600");
+                link.nextElementSibling!.classList.add("scale-100");
+              } else {
+                link.classList.remove("text-blue-600");
+                link.classList.remove("text-gray-700");
+                link.nextElementSibling!.classList.remove("scale-100");
+              }
+            });
+
+            menuSmall.forEach((link) => {
+              if (link.getAttribute("href") === `#${sectionId}`) {
+                link.classList.remove("text-gray-700");
+                link.classList.add("text-blue-600");
+                link.nextElementSibling!.classList.add("scale-100");
+              } else {
+                link.classList.remove("text-blue-600");
+                link.classList.remove("text-gray-700");
+                link.nextElementSibling!.classList.remove("scale-100");
+              }
+            });
+          }
+        });
+      },
+      {
+        rootMargin: "0px 0px -30% 0px",
+        threshold: 0.1,
+      }
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script>
