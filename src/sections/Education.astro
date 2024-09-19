@@ -1,0 +1,50 @@
+---
+import Container from "../components/Container.astro";
+import Title from "../components/Title.astro";
+
+const cursos = [
+  {
+    title: "FreeCodeCamp - Diseño Web Responsivo",
+    link: "https://www.freecodecamp.org/certification/brian_ch_mareco/responsive-web-design",
+  },
+  {
+    title: "FreeCodeCamp - Algoritmos de Javascript y estructura de datos",
+    link: "https://www.freecodecamp.org/certification/brian_ch_mareco/javascript-algorithms-and-data-structures",
+  },
+  {
+    title: "DevTalles - NextJs: El framework de React para producción",
+    link: "https://cursos.devtalles.com/certificates/qwxrf1zsng",
+  },
+];
+---
+
+<Container id="education">
+  <Title>Educación</Title>
+  <div class="flex flex-col mx-auto gap-10 mt-4">
+    <div class="flex flex-col gap-2">
+      <h2 class="text-xl sm:text-2xl font-bold">
+        Universidad del Norte - Ingeniería Informática
+      </h2>
+      <p>Primer año terminado - Planes de continuar</p>
+    </div>
+    <div class="flex flex-col gap-6">
+      <h2 class="text-xl sm:text-2xl font-bold">Autodidacta - Desde 2017</h2>
+
+      {
+        cursos.map(({ title, link }) => (
+          <div class="flex flex-col gap-2">
+            <h4 class="font-medium text-lg">{title}</h4>
+            <a
+              class="italic flex gap-2 items-center underline"
+              href={link}
+              target="_blank"
+            >
+              <img src="/icons/link.svg" class="w-5 h-5" alt="Link" />
+              Certificado de Aprobación
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</Container>
