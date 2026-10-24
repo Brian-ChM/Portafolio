@@ -9,9 +9,7 @@ import Skills from "../sections/Skills.astro";
 ---
 
 <Layout title="Portfolio - Brian Chaparro">
-  <main
-    class="min-h-screen flex flex-col gap-24 text-gray-600 max-w-screen-lg mx-auto px-4 sm:px-6 lg:p-0"
-  >
+  <main class="min-h-screen flex flex-col gap-24 text-gray-600 max-w-5xl mx-auto px-4 sm:px-6 lg:p-0">
     <Navbar />
     <Hero />
     <Projects />
@@ -62,7 +60,7 @@ import Skills from "../sections/Skills.astro";
       {
         rootMargin: "0px 0px -30% 0px",
         threshold: 0.1,
-      }
+      },
     );
 
     sections.forEach((section) => {

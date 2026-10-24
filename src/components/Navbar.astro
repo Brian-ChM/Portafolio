@@ -13,12 +13,12 @@ const menuItems = [
 
 <nav
   id="navbar"
-  class="flex items-center justify-between fixed z-50 left-0 right-0 mx-auto top-2 rounded-full p-2 h-[66px] w-[calc(100%-44px)] lg:w-full max-w-screen-lg border bg-white shadow-md"
+  class="flex items-center justify-between fixed z-50 left-0 right-0 mx-auto top-2 rounded-full p-2 h-[66px] w-[calc(100%_-_44px)] lg:w-full max-w-5xl border border-gray-200 bg-white shadow-md"
 >
   <!-- Info  -->
   <div
     id="navbarInfo"
-    class="grid grid-cols-[auto,1fr] gap-2 items-center scale-0 opacity-0 transition-all"
+    class="grid grid-cols-[auto_1fr] gap-2 items-center scale-0 opacity-0 transition-all"
   >
     <img
       class="rounded-full min-w-12 w-12 min-h-12 h-12 object-cover"
@@ -26,9 +26,7 @@ const menuItems = [
       alt="Brian Chaparro"
     />
     <div>
-      <h1
-        class="text-lg text-nowrap font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent"
-      >
+      <h1 class="text-lg text-nowrap font-bold bg-linear-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
         Brian Chaparro
       </h1>
       <h2 class="text-xs italic text-nowrap text-green-600">
@@ -40,7 +38,7 @@ const menuItems = [
   <!-- Welcome -->
   <h2
     id="welcome"
-    class="absolute transition-all left-5 text-2xl text-nowrap font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent"
+    class="absolute transition-all left-5 text-2xl text-nowrap font-bold bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent"
   >
     <span class="font-normal text-white greetingHands">👋</span> Bienvenido
   </h2>
@@ -59,10 +57,10 @@ const menuItems = [
       document.getElementById("welcome")!.style.opacity = "0";
       document.getElementById("welcome")!.style.transform = "translateY(-100%)";
       document.getElementById("navbarInfo")!.style.opacity = "1";
-      document.getElementById("navbarInfo")!.style.transform = "scale(1)";
+      document.getElementById("navbarInfo")!.style.scale = "1";
     } else {
       document.getElementById("navbarInfo")!.style.opacity = "0";
-      document.getElementById("navbarInfo")!.style.transform = "scale(0)";
+      document.getElementById("navbarInfo")!.style.scale = "0";
       document.getElementById("welcome")!.style.opacity = "1";
       document.getElementById("welcome")!.style.transform = "translateY(0)";
     }

@@ -3,16 +3,14 @@ import Container from "../components/Container.astro";
 ---
 
 <Container id="intro" class="min-h-screen justify-center">
-  <div class="grid grid-cols-[auto,1fr] gap-4 items-center">
+  <div class="grid grid-cols-[auto_1fr] gap-4 items-center">
     <img
       class="rounded-full w-24 h-24 object-cover"
       src="/Brian.jpg"
       alt="Brian Chaparro"
     />
     <div>
-      <h1
-        class="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent"
-      >
+      <h1 class="text-5xl sm:text-6xl font-bold bg-linear-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
         Brian Chaparro
       </h1>
       <h2 class="text-lg sm:text-xl italic text-green-600">
@@ -37,7 +35,7 @@ import Container from "../components/Container.astro";
         <a
           href="https://github.com/Brian-ChM"
           target="_blank"
-          class="min-w-36 flex-grow h-10 flex items-center justify-center gap-2 border border-blue-500 hover:bg-blue-500/30 font-bold transition-all text-gray-700 hover:text-black rounded-lg"
+          class="min-w-36 grow h-10 flex items-center justify-center gap-2 border border-blue-500 hover:bg-blue-500/30 font-bold transition-all text-gray-700 hover:text-black rounded-lg"
         >
           <img
             src="/icons/link.svg"
@@ -49,7 +47,7 @@ import Container from "../components/Container.astro";
         </a>
         <a
           href="mailto:brianmarecco@gmail.com"
-          class="min-w-36 flex-grow h-10 flex items-center justify-center gap-2 border border-blue-500 hover:bg-blue-500/30 font-bold transition-all text-gray-700 hover:text-black rounded-lg"
+          class="min-w-36 grow h-10 flex items-center justify-center gap-2 border border-blue-500 hover:bg-blue-500/30 font-bold transition-all text-gray-700 hover:text-black rounded-lg"
         >
           <img
             src="/icons/link.svg"
@@ -64,7 +62,7 @@ import Container from "../components/Container.astro";
       <a
         download
         href="/Brian_Chaparro.pdf"
-        class="w-full flex items-center justify-center gap-2 h-10 font-bold bg-gradient-to-b from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 transition-all text-white rounded-lg"
+        class="w-full flex items-center justify-center gap-2 h-10 font-bold bg-linear-to-b from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 transition-all text-white rounded-lg"
       >
         <img
           src="/icons/download.svg"

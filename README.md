@@ -1,54 +1,63 @@
-# Astro Starter Kit: Basics
+# Portafolio de Brian Chaparro
+
+Sitio estático con Astro 7 y Tailwind CSS 4. El formulario de contacto usa un
+servidor Express 5 con Nodemailer.
+
+## Requisitos
+
+- Node.js 22.23.4 o superior (validado con Node.js 24.15.0).
+- pnpm 10.34.8, indicado en `packageManager` de ambos `package.json`.
+
+## Desarrollo
 
 ```sh
-npm create astro@latest -- --template basics
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+El sitio se sirve en `http://localhost:4321`.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Para ejecutar el servidor de contacto:
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+pnpm --dir server install --frozen-lockfile
+pnpm --dir server start
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Configurar `EMAIL_USER` y `EMAIL_PASS` en `server/.env`; `PORT` es opcional y
+por defecto vale `3000`. El frontend envía el formulario a `/contact` en el
+mismo origen. En producción, `vercel.json` dirige esa ruta al servidor; durante
+el desarrollo con ambos procesos, se necesita un proxy equivalente para probar
+el formulario desde el navegador.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Validación
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+pnpm build
+pnpm preview
+pnpm audit
+pnpm --dir server audit
+```
 
-## 🧞 Commands
+`pnpm build` comprueba los tipos con `astro check` y genera el sitio en `dist/`.
 
-All commands are run from the root of the project, from a terminal:
+## Dependencias
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Todos los rangos de dependencias conservan `^`. Los dos archivos
+`pnpm-lock.yaml` fijan las versiones resueltas para instalaciones reproducibles.
+Se mantiene TypeScript 6 porque `@astrojs/check` 0.9.12 admite TypeScript 5 y 6,
+pero todavía no TypeScript 7.
 
-## 👀 Want to learn more?
+Tailwind usa `@tailwindcss/vite` y `src/styles/global.css`, siguiendo la
+[integración de Astro](https://docs.astro.build/en/guides/styling/#tailwind).
+Las clases y las animaciones afectadas se adaptaron según la
+[guía de migración a Tailwind 4](https://tailwindcss.com/docs/upgrade-guide).
+Tailwind 4 requiere Safari 16.4+, Chrome 111+ o Firefox 128+.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Para actualizar dentro de los rangos declarados y refrescar también las
+dependencias transitivas:
+
+```sh
+pnpm update --depth Infinity
+pnpm --dir server update --depth Infinity
+```
