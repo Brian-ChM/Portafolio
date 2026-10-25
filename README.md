@@ -5,7 +5,7 @@ servidor Express 5 con Nodemailer.
 
 ## Requisitos
 
-- Node.js 22.23.4 o superior (validado con Node.js 24.15.0).
+- Node.js 24.x (validado con Node.js 24.15.0).
 - pnpm 10.34.8, indicado en `packageManager` de ambos `package.json`.
 
 ## Desarrollo
@@ -26,10 +26,16 @@ pnpm --dir server start
 
 Configurar `EMAIL_USER` y `EMAIL_PASS` en `server/.env`; `PORT` es opcional y
 por defecto vale `3000`. El frontend envía el formulario a `/contact` en el
-mismo origen. En producción, `vercel.json` dirige esa ruta al servidor. En
+mismo origen. En producción, `vercel.json` reescribe esa ruta a `/api/contact`,
+cuya función comparte el envío de correo con el servidor local. En
 desarrollo y en la vista previa, Astro redirige `/contact` al servidor local en
 `http://127.0.0.1:3000`. Ambos procesos deben estar en ejecución para enviar el
 formulario. `CONTACT_API_URL` permite cambiar ese destino al iniciar Astro.
+
+Vercel detecta el proyecto Astro y la función `api/contact.js` sin builders
+heredados. Nodemailer también figura en las dependencias raíz para que la
+función se empaquete sin depender de una instalación dentro de `server/`.
+Las variables de correo se mantienen en el entorno de Vercel para producción.
 
 ## Contenido y diseño
 
@@ -52,6 +58,7 @@ sus licencias.
 ## Validación
 
 ```sh
+pnpm test
 pnpm build
 pnpm preview
 pnpm audit

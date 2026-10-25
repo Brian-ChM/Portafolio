@@ -4,12 +4,13 @@
   "version": "0.0.1",
   "packageManager": "pnpm@10.34.8",
   "engines": {
-    "node": ">=22.23.4"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "test": "node --test server/contact.test.js",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -17,6 +18,7 @@
     "@astrojs/check": "^0.9.12",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.2",
+    "nodemailer": "^10.2.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"
   },
