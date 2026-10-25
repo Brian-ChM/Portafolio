@@ -1,0 +1,138 @@
+\documentclass[10.5pt,a4paper]{article}
+
+% ---------- PACKAGES ----------
+\usepackage[a4paper,top=1.1cm,bottom=1.1cm,left=1.6cm,right=1.6cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{array}
+
+% ---------- FONT (clean sans-serif look) ----------
+\renewcommand{\familydefault}{\sfdefault}
+
+% ---------- COLORS ----------
+\definecolor{accent}{HTML}{1F4E79}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{midgray}{HTML}{595959}
+
+\color{darkgray}
+
+% ---------- HYPERLINKS ----------
+\hypersetup{
+    colorlinks=true,
+    urlcolor=accent,
+    linkcolor=accent
+}
+
+% ---------- SECTION STYLE ----------
+\titleformat{\section}
+  {\large\bfseries\color{accent}}
+  {}{0em}{}
+  [\vspace{-4pt}{\color{accent}}]
+\titlespacing{\section}{0pt}{7pt}{4pt}
+
+\titleformat{\subsection}
+  {\bfseries\color{darkgray}}
+  {}{0em}{}
+\titlespacing{\subsection}{0pt}{4pt}{1pt}
+
+% ---------- LIST STYLE ----------
+\setlist[itemize]{leftmargin=1.1em, itemsep=0pt, topsep=1pt, parsep=0pt}
+\setlength{\parindent}{0pt}
+
+% ---------- CUSTOM COMMANDS ----------
+\newcommand{\role}[2]{%
+  \subsection{#1}
+  {\small\color{midgray}\textit{#2}}\par\vspace{2pt}
+}
+
+\newcommand{\skillrow}[2]{%
+  \noindent\textbf{\color{darkgray}#1:} #2\\[2pt]
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ---------------- HEADER ----------------
+\begin{center}
+  {\huge\bfseries\color{accent} Brian Rubén Chaparro Mareco}\\[5pt]
+  {\small
+    +595971 544 591 \quad $\vert$ \quad
+    \href{mailto:brianmarecco@gmail.com}{brianmarecco@gmail.com}\\[2pt]
+    \href{https://linkedin.com/in/brian-chaparrro}{linkedin.com/in/brian-chaparrro} \quad $\vert$ \quad
+    \href{https://github.com/Brian-ChM}{github.com/Brian-ChM}
+  }
+\end{center}
+
+\vspace{0pt}
+
+% ---------------- PERFIL PROFESIONAL ----------------
+\section*{Perfil Profesional}
+Desarrollador de software semi senior con enfoque en \textbf{backend} y experiencia en sistemas empresariales, APIs REST y microservicios con \textbf{.NET} y \textbf{Spring Boot}. Desarrollo de integraciones y comunicación asíncrona entre servicios mediante \textbf{RabbitMQ}. Participación en el ciclo completo de desarrollo: relevamiento, implementación de frontend y backend, pruebas y despliegue. Experiencia con \textbf{Kubernetes sobre Ubuntu}, pipelines de \textbf{Azure DevOps} y aplicaciones en \textbf{IIS sobre Windows Server}.
+
+% ---------------- EXPERIENCIA PROFESIONAL ----------------
+\section*{Experiencia Profesional}
+
+\role{Desarrollador semi senior --- Grupo Élève}{Septiembre 2026 -- Presente}
+
+\begin{itemize}
+  \item Relevamiento y análisis de requerimientos para el desarrollo y evolución de sistemas.
+  \item Implementación de frontend, backend y lógica de negocio, incluyendo integraciones y pruebas funcionales.
+  \item Configuración y despliegue de aplicaciones en \textbf{IIS} sobre \textbf{Windows Server}.
+\end{itemize}
+
+\role{Desarrollador Backend --- Centro Logístico de Tecnología (CLT)}{Diciembre 2024 -- Septiembre 2026}
+
+\begin{itemize}
+  \item Colaboré en el desarrollo y mantenimiento de una plataforma CRM compuesta por múltiples servicios backend desarrollados en \textbf{.NET} y \textbf{Spring Boot}.
+  \item Diseñé, implementé y mantuve \textbf{APIs REST} para la gestión de tickets, campañas de mensajería y administración de usuarios.
+  \item Desarrollé funcionalidades de integración con \textbf{Infobip} y \textbf{WhatsApp Business Platform} mediante la API de Meta.
+  \item Implementé campañas de mensajería masiva, programación de envíos y monitoreo de estados de procesamiento.
+  \item Implementé y mantuve procesos de sincronización entre módulos de autenticación y sistemas internos.
+  \item Desarrollé mecanismos de generación, validación y renovación de licencias cifradas.
+  \item Gestioné la persistencia de datos en servicios utilizando \textbf{PostgreSQL} y \textbf{MongoDB}.
+  \item Implementé y mantuve comunicación asíncrona entre microservicios mediante \textbf{RabbitMQ}.
+  \item Ejecuté pipelines, releases y despliegues en \textbf{Azure DevOps} hacia entornos de desarrollo y QA.
+  \item Realicé seguimiento de despliegues y verificación de logs en \textbf{Kubernetes} mediante comandos de consola.
+  \item Utilicé \textbf{Docker} para la contenerización de servicios en entornos de desarrollo local.
+  \item Desarrollé indicadores operativos y métricas para el monitoreo de tickets, campañas y desempeño general del sistema.
+\end{itemize}
+
+\vspace{2pt}
+{\small\textit{Tecnologías utilizadas: C\#, .NET 8, ASP.NET Core, Java, Spring Boot, PostgreSQL, MongoDB, RabbitMQ, REST APIs, Azure DevOps, Kubernetes, Docker, Git.}}
+
+% ---------------- PROYECTOS PERSONALES ----------------
+\section*{Proyectos Personales / Autoaprendizaje}
+\begin{itemize}
+  \item Desarrollo de aplicaciones frontend con \textbf{React} y \textbf{TypeScript} (hooks, consumo de APIs REST) en proyectos personales, como complemento a la formación backend.
+  \item Repositorios disponibles en GitHub: \href{https://github.com/Brian-ChM}{github.com/Brian-ChM}.
+\end{itemize}
+
+% ---------------- HABILIDADES TÉCNICAS ----------------
+\section*{Habilidades Técnicas}
+\skillrow{Lenguajes}{C\#, Java, JavaScript, TypeScript}
+\skillrow{Backend}{.NET, ASP.NET Core, Spring Boot, Entity Framework}
+\skillrow{Frontend (autoaprendizaje)}{React, TypeScript, Next.js}
+\skillrow{Bases de Datos}{PostgreSQL, MongoDB}
+\skillrow{Arquitectura}{Microservicios, DDD, CQRS, Repository Pattern, Mediator Pattern, SOLID}
+\skillrow{Mensajería}{RabbitMQ}
+\skillrow{DevOps / Cloud}{Azure DevOps (pipelines y despliegues), Kubernetes, Docker}
+\skillrow{Servidores}{Ubuntu, Windows Server, IIS}
+\skillrow{Integraciones}{REST APIs, Infobip, WhatsApp Business Platform (Meta)}
+\skillrow{Control de Versiones}{Git, GitHub}
+
+% ---------------- EDUCACIÓN Y CERTIFICACIONES ----------------
+\section*{Educación y Certificaciones}
+\begin{itemize}
+  \item Foundational C\# with Microsoft --- FreeCodeCamp
+  \item Next.js: El framework de React para producción --- DevTalles
+  \item Algoritmos de JavaScript y Estructuras de Datos --- FreeCodeCamp
+  \item Diseño Web Responsivo --- FreeCodeCamp
+\end{itemize}
+
+\end{document}

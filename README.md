@@ -26,9 +26,28 @@ pnpm --dir server start
 
 Configurar `EMAIL_USER` y `EMAIL_PASS` en `server/.env`; `PORT` es opcional y
 por defecto vale `3000`. El frontend envía el formulario a `/contact` en el
-mismo origen. En producción, `vercel.json` dirige esa ruta al servidor; durante
-el desarrollo con ambos procesos, se necesita un proxy equivalente para probar
-el formulario desde el navegador.
+mismo origen. En producción, `vercel.json` dirige esa ruta al servidor. En
+desarrollo y en la vista previa, Astro redirige `/contact` al servidor local en
+`http://127.0.0.1:3000`. Ambos procesos deben estar en ejecución para enviar el
+formulario. `CONTACT_API_URL` permite cambiar ese destino al iniciar Astro.
+
+## Contenido y diseño
+
+La presentación, las experiencias y las habilidades se editan en
+`src/data/profile.ts`. Las experiencias se muestran de la más reciente a la más
+antigua, con los meses y años confirmados. La descripción de Grupo Élève mantiene
+generales los sistemas internos de la empresa.
+
+El CV descargable está en `public/Brian_Chaparro_CV.pdf` y su fuente LaTeX editable
+en `cv/main.tex`. Después de compilar el documento, se debe copiar el PDF a esa
+ruta pública. Actualizar el CV no modifica automáticamente el contenido de la
+web ni viceversa.
+
+La portada reproduce una ida y vuelta de 4,4 segundos cada 8 segundos, con una
+pausa entre recorridos. También responde al cursor y al foco. La repetición se
+suspende cuando la portada sale de la vista, la pestaña queda oculta o se activa
+`prefers-reduced-motion`. Las fuentes se sirven desde `public/fonts/`, junto con
+sus licencias.
 
 ## Validación
 
