@@ -1,70 +1,29 @@
 ---
 import Navbar from "../components/Navbar.astro";
+import Icon from "../components/Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import Contact from "../sections/Contact.astro";
-import Education from "../sections/Education.astro";
+import Experience from "../sections/Experience.astro";
 import Hero from "../sections/Hero.astro";
-import Projects from "../sections/Projects.astro";
 import Skills from "../sections/Skills.astro";
+import { profile } from "../data/profile";
 ---
 
-<Layout title="Portfolio - Brian Chaparro">
-  <main class="min-h-screen flex flex-col gap-24 text-gray-600 max-w-5xl mx-auto px-4 sm:px-6 lg:p-0">
-    <Navbar />
+<Layout title="Brian Chaparro | Backend, integraciones y despliegues">
+  <Navbar />
+  <main id="main-content" tabindex="-1">
     <Hero />
-    <Projects />
+    <Experience />
     <Skills />
-    <Education />
     <Contact />
   </main>
+  <footer class="site-footer">
+    <span>
+      {profile.name}
+      <span class="footer-location">{profile.location}</span>
+    </span>
+    <a href="#intro">
+      Volver al inicio <Icon name="arrow-up" />
+    </a>
+  </footer>
 </Layout>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll("section");
-    const menuLarge = document.querySelectorAll("#menuLarge a");
-    const menuSmall = document.querySelectorAll("#menuSmall a");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const sectionId = entry.target.getAttribute("id");
-
-          if (entry.isIntersecting) {
-            menuLarge.forEach((link) => {
-              if (link.getAttribute("href") === `#${sectionId}`) {
-                link.classList.remove("text-gray-700");
-                link.classList.add("text-blue-600");
-                link.nextElementSibling!.classList.add("scale-100");
-              } else {
-                link.classList.remove("text-blue-600");
-                link.classList.remove("text-gray-700");
-                link.nextElementSibling!.classList.remove("scale-100");
-              }
-            });
-
-            menuSmall.forEach((link) => {
-              if (link.getAttribute("href") === `#${sectionId}`) {
-                link.classList.remove("text-gray-700");
-                link.classList.add("text-blue-600");
-                link.nextElementSibling!.classList.add("scale-100");
-              } else {
-                link.classList.remove("text-blue-600");
-                link.classList.remove("text-gray-700");
-                link.nextElementSibling!.classList.remove("scale-100");
-              }
-            });
-          }
-        });
-      },
-      {
-        rootMargin: "0px 0px -30% 0px",
-        threshold: 0.1,
-      },
-    );
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-  });
-</script>

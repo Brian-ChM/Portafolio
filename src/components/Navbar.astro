@@ -1,87 +1,60 @@
 ---
-import MenuLarge from "./MenuLarge.astro";
-import MenuSmall from "./MenuSmall.astro";
-
-const menuItems = [
-  { name: "Inicio", href: "#intro" },
-  { name: "Proyectos", href: "#projects" },
-  { name: "Habilidades", href: "#skills" },
-  { name: "Educación", href: "#education" },
-  { name: "Contacto", href: "#contact" },
+const links = [
+  { href: "#experience", label: "Experiencia" },
+  { href: "#skills", label: "Habilidades" },
+  { href: "#contact", label: "Contacto" },
 ];
 ---
 
-<nav
-  id="navbar"
-  class="flex items-center justify-between fixed z-50 left-0 right-0 mx-auto top-2 rounded-full p-2 h-[66px] w-[calc(100%_-_44px)] lg:w-full max-w-5xl border border-gray-200 bg-white shadow-md"
->
-  <!-- Info  -->
-  <div
-    id="navbarInfo"
-    class="grid grid-cols-[auto_1fr] gap-2 items-center scale-0 opacity-0 transition-all"
+<header class="trace-nav">
+  <a
+    class="trace-signature"
+    href="#intro"
+    aria-label="Brian Chaparro, inicio"
+    translate="no"
   >
-    <img
-      class="rounded-full min-w-12 w-12 min-h-12 h-12 object-cover"
-      src="/Brian.jpg"
-      alt="Brian Chaparro"
-    />
-    <div>
-      <h1 class="text-lg text-nowrap font-bold bg-linear-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-        Brian Chaparro
-      </h1>
-      <h2 class="text-xs italic text-nowrap text-green-600">
-        Desarrollador Web
-      </h2>
-    </div>
-  </div>
-
-  <!-- Welcome -->
-  <h2
-    id="welcome"
-    class="absolute transition-all left-5 text-2xl text-nowrap font-bold bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent"
-  >
-    <span class="font-normal text-white greetingHands">👋</span> Bienvenido
-  </h2>
-
-  <!-- Menu large -->
-  <MenuLarge menuItems={menuItems} />
-
-  <!-- Menu small -->
-  <MenuSmall menuItems={menuItems} />
-</nav>
+    b<span class="signature-joint">/</span>c
+  </a>
+  <nav aria-label="Navegación principal">
+    {links.map((link) => (
+      <a href={link.href} data-section-link>
+        {link.label}
+      </a>
+    ))}
+  </nav>
+</header>
 
 <script>
-  /* Navbar info */
-  document.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      document.getElementById("welcome")!.style.opacity = "0";
-      document.getElementById("welcome")!.style.transform = "translateY(-100%)";
-      document.getElementById("navbarInfo")!.style.opacity = "1";
-      document.getElementById("navbarInfo")!.style.scale = "1";
-    } else {
-      document.getElementById("navbarInfo")!.style.opacity = "0";
-      document.getElementById("navbarInfo")!.style.scale = "0";
-      document.getElementById("welcome")!.style.opacity = "1";
-      document.getElementById("welcome")!.style.transform = "translateY(0)";
-    }
-  });
+  const links = document.querySelectorAll<HTMLAnchorElement>(
+    "[data-section-link]",
+  );
+  const sections = Array.from(
+    document.querySelectorAll<HTMLElement>("#experience, #skills, #contact"),
+  );
+  const header = document.querySelector<HTMLElement>(".trace-nav");
+  let scheduled = false;
+
+  function updateActiveLink() {
+    const threshold = (header?.getBoundingClientRect().bottom ?? 0) + 48;
+    const active = sections.findLast(
+      (section) => section.getBoundingClientRect().top <= threshold,
+    );
+    links.forEach((link) => {
+      if (active && link.hash === `#${active.id}`)
+        link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+    scheduled = false;
+  }
+
+  function scheduleUpdate() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(updateActiveLink);
+  }
+
+  window.addEventListener("scroll", scheduleUpdate, { passive: true });
+  window.addEventListener("resize", scheduleUpdate);
+  window.addEventListener("load", updateActiveLink);
+  updateActiveLink();
 </script>
-
-<style>
-  .greetingHands {
-    display: inline-block;
-    animation: greetingHands 1.5s ease-in-out infinite;
-  }
-
-  @keyframes greetingHands {
-    0% {
-      transform: rotate(10deg);
-    }
-    50% {
-      transform: rotate(-10deg);
-    }
-    100% {
-      transform: rotate(10deg);
-    }
-  }
-</style>

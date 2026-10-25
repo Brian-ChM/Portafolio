@@ -1,0 +1,259 @@
+<div class="trace-cover-wiring" aria-hidden="true">
+  <svg class="cover-routing" focusable="false">
+    <path class="cover-support" />
+    <path class="cover-conductor" />
+    <path class="cover-branch" />
+    <g class="cover-detail-nodes">
+      {Array.from({ length: 8 }, () => (
+        <circle r="3" />
+      ))}
+    </g>
+    <circle class="cover-packet-tail" r="7">
+      <animateMotion
+        class="cover-motion"
+        begin="indefinite"
+        dur="4.4s"
+        fill="freeze"
+        calcMode="linear"
+        keyPoints="0;1;0"
+        keyTimes="0;0.55;1"
+      />
+    </circle>
+    <circle class="cover-packet" r="3">
+      <animateMotion
+        class="cover-motion"
+        begin="indefinite"
+        dur="4.4s"
+        fill="freeze"
+        calcMode="linear"
+        keyPoints="0;1;0"
+        keyTimes="0;0.55;1"
+      />
+    </circle>
+  </svg>
+  <div class="cover-stations">
+    {[
+      { id: "frontend", label: "Frontend" },
+      { id: "api", label: "API" },
+      { id: "services", label: "Servicios" },
+      { id: "data", label: "Datos" },
+    ].map(({ id, label }) => (
+      <span class={`cover-station cover-station-${id}`} data-route-stage={id}>
+        <span class="cover-station-content">
+          <span class="cover-junction"></span>
+          <span class="cover-station-label">{label}</span>
+        </span>
+      </span>
+    ))}
+  </div>
+  <div class="cover-integrations">
+    <span class="cover-integrations-content">
+      <span class="cover-junction"></span>
+      <span class="cover-station-label">Integraciones</span>
+    </span>
+  </div>
+  <div class="cover-infrastructure">
+    <span class="cover-infrastructure-content">
+      <span class="cover-junction"></span>
+      <span>Infraestructura</span>
+    </span>
+  </div>
+</div>
+
+<script>
+  const cover = document.querySelector<HTMLElement>(".trace-cover");
+  const wiring = cover?.querySelector<HTMLElement>(".trace-cover-wiring");
+  const heading = cover?.querySelector<HTMLElement>(".trace-cover-heading");
+  const identity = cover?.querySelector<HTMLElement>(".trace-identity");
+  const intro = cover?.querySelector<HTMLElement>(".trace-intro");
+  const svg = wiring?.querySelector<SVGSVGElement>(".cover-routing");
+  const conductor = svg?.querySelector<SVGPathElement>(".cover-conductor");
+
+  if (cover && wiring && heading && identity && intro && svg && conductor) {
+    const branch = svg.querySelector<SVGPathElement>(".cover-branch")!;
+    const support = svg.querySelector<SVGPathElement>(".cover-support")!;
+    const detailNodes = svg.querySelectorAll<SVGCircleElement>(
+      ".cover-detail-nodes circle",
+    );
+    const stages = wiring.querySelectorAll<HTMLElement>("[data-route-stage]");
+    const servicesContent = wiring.querySelector<HTMLElement>(
+      ".cover-station-services .cover-station-content",
+    )!;
+    const integrations = wiring.querySelector<HTMLElement>(
+      ".cover-integrations",
+    )!;
+    const integrationsContent = wiring.querySelector<HTMLElement>(
+      ".cover-integrations-content",
+    )!;
+    const infrastructure = wiring.querySelector<HTMLElement>(
+      ".cover-infrastructure",
+    )!;
+    const motions = svg.querySelectorAll<SVGAnimationElement>(".cover-motion");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let lastRun = -Infinity;
+    let endTimer: ReturnType<typeof setTimeout>;
+    let repeatTimer: ReturnType<typeof setTimeout>;
+    let inView = false;
+    let previousGeometry = "";
+
+    function stopSignal() {
+      clearTimeout(endTimer);
+      cover?.classList.remove("is-signal-running");
+    }
+
+    function drawRoute() {
+      if (!wiring || !heading || !identity || !intro || !svg || !conductor)
+        return;
+      const rail = wiring.getBoundingClientRect();
+      const top = heading.getBoundingClientRect().top;
+      if (!rail.width) return;
+      const offset = rail.top - top;
+      // Measure the untransformed wrappers so repeated resizes never move the anchors.
+      const points = Array.from(stages, (stage) => {
+        const rect = stage.getBoundingClientRect();
+        return {
+          x: rect.left + rect.width / 2 - rail.left,
+          y: rect.top + 4 - top,
+        };
+      });
+      const [frontend, api, servicesBase, data] = points;
+      const integrationRect = integrations.getBoundingClientRect();
+      const integrationBase = {
+        x: integrationRect.left + integrationRect.width / 2 - rail.left,
+        y: integrationRect.top + 4 - top,
+      };
+      const infrastructureRect = infrastructure.getBoundingClientRect();
+      const supportY =
+        infrastructureRect.top + infrastructureRect.height / 2 - top;
+      const gapLeft = Math.max(
+        identity.getBoundingClientRect().right - rail.left + 28,
+        api.x + 24,
+      );
+      const gapRight = intro.getBoundingClientRect().left - rail.left - 28;
+      const loopWidth = Math.min(160, gapRight - gapLeft);
+      const hasRoom =
+        window.matchMedia("(min-width: 1000px)").matches && loopWidth >= 136;
+      const rise = gapLeft + (gapRight - gapLeft - loopWidth) / 2;
+      const fall = rise + loopWidth;
+      const crest = Math.max(12, api.y - 200);
+      const services = hasRoom
+        ? { x: rise + loopWidth / 2, y: crest }
+        : servicesBase;
+      const integration = hasRoom
+        ? { x: services.x + 36, y: crest + 92 }
+        : integrationBase;
+      const bend = 16;
+      const path = hasRoom
+        ? `M${frontend.x} ${frontend.y} H${rise - bend} Q${rise} ${api.y} ${rise} ${api.y - bend} V${crest + bend} Q${rise} ${crest} ${rise + bend} ${crest} H${fall - bend} Q${fall} ${crest} ${fall} ${crest + bend} V${data.y - bend} Q${fall} ${data.y} ${fall + bend} ${data.y} H${data.x}`
+        : `M${frontend.x} ${frontend.y} H${data.x}`;
+      const viewBox = `0 0 ${rail.width} ${offset + rail.height}`;
+      const geometry = JSON.stringify({
+        path,
+        viewBox,
+        points,
+        integrationBase,
+        services,
+        integration,
+        supportY,
+      });
+      if (geometry === previousGeometry) return;
+      previousGeometry = geometry;
+      stopSignal();
+      // Matching CSS dimensions and viewBox dimensions preserves circular nodes at any size.
+      svg.setAttribute("viewBox", viewBox);
+      svg.style.top = `${-offset}px`;
+      svg.style.height = `${offset + rail.height}px`;
+      conductor.setAttribute("d", path);
+      servicesContent.style.transform = `translate(${services.x - servicesBase.x}px, ${services.y - servicesBase.y}px)`;
+      integrationsContent.style.transform = `translate(${integration.x - integrationBase.x}px, ${integration.y - integrationBase.y}px)`;
+      const branchBend = Math.min(8, Math.abs(integration.x - services.x) / 2);
+      const direction = integration.x >= services.x ? 1 : -1;
+      branch.setAttribute(
+        "d",
+        `M${services.x} ${services.y} V${integration.y - branchBend} Q${services.x} ${integration.y} ${services.x + branchBend * direction} ${integration.y} H${integration.x}`,
+      );
+      const serviceSupportX = hasRoom ? fall + bend : services.x;
+      support.setAttribute(
+        "d",
+        `M${frontend.x} ${supportY} H${data.x} ${[frontend.x, api.x, serviceSupportX, data.x].map((x) => `M${x} ${api.y + 8} V${supportY}`).join(" ")}`,
+      );
+      const details = hasRoom
+        ? [
+            { x: (frontend.x + api.x) / 2, y: api.y },
+            { x: rise, y: crest + 52 },
+            { x: fall, y: crest + 56 },
+            { x: services.x, y: crest + 58 },
+            { x: serviceSupportX, y: data.y },
+            { x: (serviceSupportX + data.x) / 2, y: data.y },
+            { x: api.x, y: supportY },
+            { x: serviceSupportX, y: supportY },
+          ]
+        : [
+            { x: (frontend.x + api.x) / 2, y: api.y },
+            { x: (api.x + services.x) / 2, y: api.y },
+            { x: services.x, y: integration.y - 14 },
+            { x: api.x, y: supportY },
+            { x: services.x, y: supportY },
+          ];
+      detailNodes.forEach((node, index) => {
+        const point = details[index];
+        node.setAttribute("visibility", point ? "visible" : "hidden");
+        if (point) {
+          node.setAttribute("cx", String(point.x));
+          node.setAttribute("cy", String(point.y));
+        }
+      });
+      motions.forEach((motion) => motion.setAttribute("path", path));
+      wiring.classList.add("is-route-ready");
+      wiring.classList.toggle("is-expanded", hasRoom);
+    }
+
+    function playSignal() {
+      const now = performance.now();
+      if (
+        !inView ||
+        document.hidden ||
+        reducedMotion.matches ||
+        now - lastRun < 4800
+      )
+        return;
+      lastRun = now;
+      clearTimeout(endTimer);
+      clearTimeout(repeatTimer);
+      cover?.classList.add("is-signal-running");
+      motions.forEach((motion) => motion.beginElement());
+      endTimer = setTimeout(stopSignal, 4450);
+      repeatTimer = setTimeout(playSignal, 8000);
+    }
+
+    function syncPlayback() {
+      clearTimeout(repeatTimer);
+      stopSignal();
+      if (!inView || document.hidden || reducedMotion.matches) return;
+      lastRun = -Infinity;
+      playSignal();
+    }
+
+    drawRoute();
+    const resizeObserver = new ResizeObserver(drawRoute);
+    resizeObserver.observe(heading);
+    resizeObserver.observe(wiring);
+    document.fonts.ready.then(drawRoute);
+    cover.addEventListener("pointerenter", playSignal);
+    cover.addEventListener("focusin", playSignal);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some(
+          (entry) => entry.isIntersecting && entry.intersectionRatio >= 0.25,
+        );
+        if (visible === inView) return;
+        inView = visible;
+        syncPlayback();
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(cover);
+    document.addEventListener("visibilitychange", syncPlayback);
+    reducedMotion.addEventListener("change", syncPlayback);
+  }
+</script>

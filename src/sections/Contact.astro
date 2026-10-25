@@ -1,124 +1,159 @@
 ---
-import Container from "../components/Container.astro";
-import Title from "../components/Title.astro";
+import Icon from "../components/Icon.astro";
+import { profile } from "../data/profile";
 ---
 
-<Container id="contact" class="mb-8">
-  <Title>Contacto</Title>
-  <div class="flex flex-col gap-4 p-8 rounded-lg bg-white shadow-md mt-4">
-    <h5 class="text-xl font-bold text-gray-700">
-      Si tienes alguna pregunta o necesitas ayuda con tu proyecto, no dudes en
-      contactarme.
-    </h5>
-
-    <div class="flex flex-col sm:flex-row gap-16">
-      <div class="flex flex-col gap-4 mt-4 w-80">
-        <a
-          href="mailto:brianmarecco@gmail.com"
-          class="text-blue-500 flex gap-2 items-center"
-        >
-          <img src="/logos/gmail.svg" alt="Email" class="w-6 h-6" />
-          Enviar Mensaje
-        </a>
-        <a
-          href="https://github.com/Brian-ChM"
-          target="_blank"
-          class="text-blue-500 flex gap-2 items-center"
-        >
-          <img src="/logos/github.svg" alt="Github" class="w-6 h-6" />
-          Github
-        </a>
-      </div>
-
-      <form action="" id="contact-form" class="flex flex-col w-full gap-4">
-        <div class="flex flex-col gap-2">
-          <label for="name" class="text-sm font-medium text-gray-700">
-            Nombre
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            class="w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
-          />
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label for="email" class="text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            class="w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
-          />
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label for="message" class="text-sm font-medium text-gray-700">
-            Mensaje
-          </label>
-          <textarea
-            name="message"
-            id="message"
-            rows="5"
-            class="w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          class="w-full rounded-lg bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-600 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
-        >
-          Enviar
-        </button>
-      </form>
+<section class="contact-section" id="contact" aria-labelledby="contact-title">
+  <div class="contact-intro">
+    <p class="contact-kicker">Contacto</p>
+    <h2 id="contact-title">
+      Hablemos
+      <br />
+      de sistemas.
+    </h2>
+    <p>Podés escribirme por correo o dejarme un mensaje.</p>
+    <a class="contact-email" href={`mailto:${profile.email}`}>
+      {profile.email}
+      <Icon name="arrow-up-right" />
+    </a>
+    <div class="contact-links">
+      <a href={profile.github} target="_blank" rel="noopener noreferrer">
+        GitHub <Icon name="arrow-up-right" />
+        <span class="trace-sr">(abre en otra pestaña)</span>
+      </a>
+      <a href={profile.cv} download="Brian_Chaparro_CV.pdf">
+        Descargar CV <Icon name="download" />
+      </a>
     </div>
   </div>
-</Container>
+  <form class="contact-form" id="contact-form" action="/contact" method="post">
+    <div class="contact-field">
+      <label for="contact-name">Nombre</label>
+      <input
+        id="contact-name"
+        name="name"
+        type="text"
+        autocomplete="name"
+        maxlength="120"
+        required
+      />
+    </div>
+    <div class="contact-field">
+      <label for="contact-email">Correo electrónico</label>
+      <input
+        id="contact-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        spellcheck="false"
+        maxlength="254"
+        required
+      />
+    </div>
+    <div class="contact-field">
+      <label for="contact-message">Mensaje</label>
+      <textarea
+        id="contact-message"
+        name="message"
+        rows="5"
+        maxlength="5000"
+        required
+      ></textarea>
+    </div>
+    <button class="contact-submit" type="submit">
+      <span data-submit-label>Enviar mensaje</span>
+      <Icon name="arrow-up-right" />
+    </button>
+    <p
+      class="contact-status"
+      id="contact-status"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      hidden
+    ></p>
+    <noscript>
+      <p class="contact-noscript">
+        Para usar el formulario, activá JavaScript. También podés{" "}
+        <a href={`mailto:${profile.email}`}>escribirme por correo</a>.
+      </p>
+    </noscript>
+  </form>
+</section>
 
 <script>
-  document
-    .getElementById("contact-form")!
-    .addEventListener("submit", async function (event: Event) {
+  const form = document.querySelector<HTMLFormElement>("#contact-form");
+  const status =
+    document.querySelector<HTMLParagraphElement>("#contact-status");
+  const button = form?.querySelector<HTMLButtonElement>("button[type=submit]");
+  const buttonLabel = button?.querySelector<HTMLSpanElement>(
+    "[data-submit-label]",
+  );
+
+  if (form && status && button && buttonLabel) {
+    const fields = ["contact-name", "contact-email", "contact-message"].map(
+      (id) =>
+        document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement,
+    );
+    let sending = false;
+    fields.forEach((field) =>
+      field.addEventListener("input", () => field.setCustomValidity("")),
+    );
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (sending) return;
+      for (const field of fields)
+        field.setCustomValidity(
+          field.value.trim() ? "" : "Completá este campo.",
+        );
+      if (!form.reportValidity()) return;
 
-      const form = event.target as HTMLFormElement;
-      const name = (form.querySelector("#name") as HTMLInputElement).value;
-      const email = (form.querySelector("#email") as HTMLInputElement).value;
-      const message = (form.querySelector("#message") as HTMLTextAreaElement)
-        .value;
-
-      const data = {
-        name: name,
-        email: email,
-        message: message,
-      };
+      sending = true;
+      button.disabled = true;
+      buttonLabel.textContent = "Enviando…";
+      form.setAttribute("aria-busy", "true");
+      status.hidden = false;
+      status.dataset.state = "loading";
+      status.textContent = "Enviando tu mensaje…";
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
 
       try {
-        const response = await fetch("/contact", {
+        const response = await fetch(form.action, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: fields[0].value.trim(),
+            email: fields[1].value.trim(),
+            message: fields[2].value.trim(),
+          }),
+          signal: controller.signal,
         });
-
-        if (response.ok) {
-          alert("Mensaje enviado exitosamente");
-          form.reset();
-        } else {
-          const errorData = await response.json();
-          alert(
-            `Error al enviar el mensaje: ${errorData.message || response.statusText}`,
-          );
+        const result: unknown = await response.json();
+        if (
+          !response.ok ||
+          !result ||
+          typeof result !== "object" ||
+          !("message" in result) ||
+          typeof result.message !== "string"
+        ) {
+          throw new Error("Contact request failed");
         }
-      } catch (error) {
-        console.error("Error en la solicitud:", error);
-        alert(
-          "Hubo un problema al enviar el formulario. Por favor, intenta de nuevo más tarde.",
-        );
+        status.dataset.state = "success";
+        status.textContent = "Mensaje enviado. Gracias por escribirme.";
+        form.reset();
+      } catch {
+        status.dataset.state = "error";
+        status.textContent =
+          "No se pudo enviar el mensaje. Intentá de nuevo o escribime por correo.";
+      } finally {
+        clearTimeout(timeout);
+        sending = false;
+        button.disabled = false;
+        buttonLabel.textContent = "Enviar mensaje";
+        form.removeAttribute("aria-busy");
       }
     });
+  }
 </script>

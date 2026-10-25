@@ -1,212 +1,33 @@
 ---
-import Container from "../components/Container.astro";
-import Title from "../components/Title.astro";
+import { skillAreas } from "../data/profile";
 ---
 
-<Container id="skills">
-  <Title>Habilidades</Title>
-
-  <div class="flex flex-col gap-24 overflow-hidden max-w-[90vw] mask mt-4">
-    <ul class="flex gap-24 marquee-first">
-      <img
-        src="/logos/astro.svg"
-        alt="Astro"
-        title="Astro"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/nextjs.svg"
-        alt="NextJs"
-        title="NextJs"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/react.svg"
-        alt="React"
-        title="React"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/typescript.svg"
-        alt="typescript"
-        title="typescript"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/nodejs.svg"
-        alt="nodejs"
-        title="nodejs"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/csharp.svg"
-        alt="CSharp"
-        title="CSharp"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/dotnet.svg"
-        alt="DotNet"
-        title="DotNet"
-        class="w-auto h-28 object-contain"
-      />
-
-      <img
-        src="/logos/astro.svg"
-        alt="Astro"
-        title="Astro"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/nextjs.svg"
-        alt="NextJs"
-        title="NextJs"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/react.svg"
-        alt="React"
-        title="React"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/typescript.svg"
-        alt="typescript"
-        title="typescript"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/nodejs.svg"
-        alt="nodejs"
-        title="nodejs"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/csharp.svg"
-        alt="CSharp"
-        title="CSharp"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/dotnet.svg"
-        alt="DotNet"
-        title="DotNet"
-        class="w-auto h-28 object-contain"
-      />
-    </ul>
-
-    <ul class="flex gap-24 marquee-second">
-      <img
-        src="/logos/postgresql.svg"
-        alt="PostgreSQL"
-        title="PostgreSQL"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/github.svg"
-        alt="GitHub"
-        title="GitHub"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/git.svg"
-        alt="Git"
-        title="Git"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/docker.svg"
-        alt="Docker"
-        title="Docker"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/prisma.svg"
-        alt="Prisma"
-        title="Prisma"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/zod.svg"
-        alt="Zod"
-        title="Zod"
-        class="w-auto h-28 object-contain"
-      />
-
-      <img
-        src="/logos/postgresql.svg"
-        alt="PostgreSQL"
-        title="PostgreSQL"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/github.svg"
-        alt="GitHub"
-        title="GitHub"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/git.svg"
-        alt="Git"
-        title="Git"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/docker.svg"
-        alt="Docker"
-        title="Docker"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/prisma.svg"
-        alt="Prisma"
-        title="Prisma"
-        class="w-auto h-28 object-contain"
-      />
-      <img
-        src="/logos/zod.svg"
-        alt="Zod"
-        title="Zod"
-        class="w-auto h-28 object-contain"
-      />
-    </ul>
+<section class="trace-skills" id="skills" aria-labelledby="skills-title">
+  <div class="trace-section-heading">
+    <h2 id="skills-title">
+      Habilidades
+      <br />
+      técnicas.
+    </h2>
+    <p>
+      Herramientas y conocimientos,
+      <br />
+      con el contexto en el que los uso.
+    </p>
   </div>
-</Container>
-
-<style>
-  .mask {
-    mask-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 1) 10%,
-      rgba(0, 0, 0, 1) 90%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-
-  .marquee-first {
-    animation: first_scrolling 20s linear infinite;
-  }
-
-  .marquee-second {
-    animation: second_scrolling 20s linear infinite;
-  }
-
-  @keyframes first_scrolling {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-1415px);
-    }
-  }
-
-  @keyframes second_scrolling {
-    0% {
-      transform: translateX(-1257px);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-</style>
+  <div class="trace-skill-matrix">
+    {skillAreas.map((area) => (
+      <article class="trace-skill-area">
+        <h3>{area.title}</h3>
+        <div>
+          <ul class="trace-tool-list" aria-label={area.title}>
+            {area.tools.map((tool) => (
+              <li translate="no">{tool}</li>
+            ))}
+          </ul>
+          <p>{area.context}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

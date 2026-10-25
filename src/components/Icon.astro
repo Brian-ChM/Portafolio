@@ -1,0 +1,28 @@
+---
+interface Props {
+  name: "arrow-up-right" | "arrow-down-right" | "download" | "arrow-up";
+}
+
+const { name } = Astro.props;
+const paths = {
+  "arrow-up-right": ["M7 17 17 7M7 7h10v10"],
+  "arrow-down-right": ["m7 7 10 10M7 17h10V7"],
+  download: ["M12 3v12m-5-5 5 5 5-5", "M5 16v5h14v-5"],
+  "arrow-up": ["M12 19V5m-7 7 7-7 7 7"],
+};
+---
+
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {paths[name].map((path) => (
+    <path d={path} />
+  ))}
+</svg>

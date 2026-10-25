@@ -1,0 +1,51 @@
+---
+import { experiences } from "../data/profile";
+---
+
+<section class="trace-work" id="experience" aria-labelledby="experience-title">
+  <div class="trace-section-heading">
+    <h2 id="experience-title">
+      Experiencia
+      <br />
+      profesional.
+    </h2>
+    <p>
+      Desarrollo de software, integraciones
+      <br />y entrega de aplicaciones.
+    </p>
+  </div>
+  <div class="trace-career">
+    {experiences.map((experience) => (
+      <article
+        class:list={["trace-job", { "trace-job-current": experience.current }]}
+      >
+        <div class="trace-job-period">
+          <span class="trace-job-dot" aria-hidden="true"></span>
+          {experience.period}
+        </div>
+        <div class="trace-job-body">
+          <div class="trace-job-heading">
+            <h3>{experience.company}</h3>
+            <span class="trace-job-role">{experience.role}</span>
+          </div>
+          {experience.fullName && (
+            <span class="trace-company-name">{experience.fullName}</span>
+          )}
+          <p>{experience.description}</p>
+          <ul>
+            {experience.responsibilities.map((responsibility) => (
+              <li>{responsibility}</li>
+            ))}
+          </ul>
+          {experience.contexts.length > 0 && (
+            <div class="trace-job-context">
+              {experience.contexts.map((context) => (
+                <span>{context}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

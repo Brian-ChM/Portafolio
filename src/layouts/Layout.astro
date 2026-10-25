@@ -1,37 +1,49 @@
 ---
 import "../styles/global.css";
+import { profile } from "../data/profile";
 
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = profile.description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es-PY">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#10171f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_PY" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/chakra-petch-600-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen">
-    <div class="fixed top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-    <slot />
+  <body>
+    <div id="brian-backend-trace">
+      <a class="trace-skip" href="#main-content">
+        Saltar al contenido
+      </a>
+      <slot />
+    </div>
   </body>
 </html>
-<style is:global>
-  html {
-    font-family: system-ui, sans-serif;
-    scroll-behavior: smooth;
-  }
-
-  #intro,
-  #projects,
-  #skills,
-  #contact {
-    scroll-margin-top: 80px;
-  }
-</style>

@@ -1,77 +1,50 @@
 ---
-import Container from "../components/Container.astro";
+import HeroWiring from "../components/HeroWiring.astro";
+import Icon from "../components/Icon.astro";
+import { profile } from "../data/profile";
 ---
 
-<Container id="intro" class="min-h-screen justify-center">
-  <div class="grid grid-cols-[auto_1fr] gap-4 items-center">
-    <img
-      class="rounded-full w-24 h-24 object-cover"
-      src="/Brian.jpg"
-      alt="Brian Chaparro"
-    />
-    <div>
-      <h1 class="text-5xl sm:text-6xl font-bold bg-linear-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-        Brian Chaparro
+<section class="trace-cover" id="intro" aria-labelledby="intro-title">
+  <div class="trace-cover-heading">
+    <div class="trace-identity">
+      <p class="trace-role">{profile.role}</p>
+      <h1 id="intro-title" translate="no">
+        Brian
+        <br />
+        Chaparro
       </h1>
-      <h2 class="text-lg sm:text-xl italic text-green-600">
-        Desarrollador Web
-      </h2>
     </div>
-  </div>
-
-  <div class="flex flex-col gap-4 max-w-[75ch] text-lg">
-    <p>
-      He trabajado creando interfaces modernas con React, Next.js y Astro, y
-      también en el backend con Node.js, Prisma y PostgreSQL. Me apasiona
-      construir aplicaciones que resuelvan problemas reales.
-    </p>
-
-    <p>
-      Me enfoco en optimizar la experiencia del usuario y mejorar continuamente
-      con cada proyecto en el que trabajo.
-    </p>
-    <div class="flex gap-4 justify-between w-full flex-col-reverse sm:flex-row">
-      <div class="flex gap-4 w-full">
-        <a
-          href="https://github.com/Brian-ChM"
-          target="_blank"
-          class="min-w-36 grow h-10 flex items-center justify-center gap-2 border border-blue-500 hover:bg-blue-500/30 font-bold transition-all text-gray-700 hover:text-black rounded-lg"
-        >
-          <img
-            src="/icons/link.svg"
-            class="text-white"
-            alt="Github"
-            class="w-5 h-5"
-          />
-          Github
+    <div class="trace-intro">
+      <span class="trace-intro-rule" aria-hidden="true"></span>
+      <h2>
+        Backend, integraciones
+        <br />y despliegues.
+      </h2>
+      <p>
+        Desarrollo aplicaciones empresariales, desde el backend y las
+        integraciones hasta las interfaces y las pruebas. Experiencia en
+        despliegues y entornos de servidores.
+      </p>
+      <div class="hero-actions">
+        <a class="hero-action hero-action-primary" href="#experience">
+          Ver experiencia <Icon name="arrow-down-right" />
         </a>
         <a
-          href="mailto:brianmarecco@gmail.com"
-          class="min-w-36 grow h-10 flex items-center justify-center gap-2 border border-blue-500 hover:bg-blue-500/30 font-bold transition-all text-gray-700 hover:text-black rounded-lg"
+          class="hero-action hero-action-secondary"
+          href={profile.cv}
+          download="Brian_Chaparro_CV.pdf"
+          type="application/pdf"
         >
-          <img
-            src="/icons/link.svg"
-            class="text-white"
-            alt="Github"
-            class="w-5 h-5"
-          />
-          Gmail
+          Descargar CV <Icon name="download" />
         </a>
       </div>
-
-      <a
-        download
-        href="/Brian_Chaparro.pdf"
-        class="w-full flex items-center justify-center gap-2 h-10 font-bold bg-linear-to-b from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 transition-all text-white rounded-lg"
-      >
-        <img
-          src="/icons/download.svg"
-          class="text-white"
-          alt="Descargar CV"
-          class="w-5 h-5"
-        />
-        Descargar CV
-      </a>
     </div>
   </div>
-</Container>
+  <HeroWiring />
+  <div class="trace-cover-foot">
+    <span>C# / .NET</span>
+    <span>APIs e integraciones</span>
+    <span>Docker / Kubernetes</span>
+    <span class="trace-foot-location">{profile.location}</span>
+  </div>
+</section>

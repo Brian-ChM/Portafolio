@@ -1,8 +1,927 @@
 @import "tailwindcss";
+@import "./theme.css";
 
-@layer base {
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
+#brian-backend-trace *,
+#brian-backend-trace *::before,
+#brian-backend-trace *::after {
+  box-sizing: border-box;
+}
+#brian-backend-trace :is(h1, h2, h3, p, ol) {
+  margin: 0;
+}
+#brian-backend-trace :is(a, button, summary) {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#brian-backend-trace :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--bt-signal);
+  outline-offset: 5px;
+}
+#brian-backend-trace a {
+  color: inherit;
+  text-decoration: none;
+}
+#brian-backend-trace a:hover {
+  color: var(--bt-signal);
+}
+#brian-backend-trace button {
+  font: inherit;
+}
+#brian-backend-trace :is(section, footer, main) {
+  scroll-margin-top: 20px;
+}
+#brian-backend-trace .trace-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#brian-backend-trace .trace-skip {
+  position: fixed;
+  top: 12px;
+  z-index: 40;
+  padding: 12px 20px;
+  background: var(--bt-base);
+  transform: translateY(-200%);
+}
+#brian-backend-trace .trace-skip:focus {
+  transform: translateY(0);
+}
+#brian-backend-trace .trace-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bt-base);
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-height: 76px;
+  padding: 18px 44px;
+  border-bottom: 1px solid var(--bt-line);
+}
+#brian-backend-trace .trace-signature {
+  font:
+    600 30px/0.8 "Chakra Petch",
+    sans-serif;
+  letter-spacing: -3px;
+}
+#brian-backend-trace .signature-joint {
+  color: var(--bt-signal);
+  padding: 0 2px;
+  font-weight: 400;
+}
+#brian-backend-trace .trace-nav-caption {
+  font-size: 12px;
+  color: var(--bt-secondary);
+}
+#brian-backend-trace .trace-nav nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-left: auto;
+  font-size: 12px;
+}
+#brian-backend-trace .trace-nav nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 44px;
+}
+#brian-backend-trace .trace-cover {
+  position: relative;
+  isolation: isolate;
+  padding: 48px 44px 0;
+}
+#brian-backend-trace .trace-cover-heading {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 36px;
+  align-items: end;
+  padding-bottom: 44px;
+}
+#brian-backend-trace .trace-identity {
+  width: fit-content;
+  max-width: 100%;
+}
+#brian-backend-trace .trace-cover-wiring {
+  position: relative;
+  margin: 0 0 24px;
+  pointer-events: none;
+}
+#brian-backend-trace .cover-routing {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: visible;
+  opacity: 0;
+}
+#brian-backend-trace .is-route-ready .cover-routing {
+  opacity: 1;
+}
+#brian-backend-trace .cover-conductor,
+#brian-backend-trace .cover-branch,
+#brian-backend-trace .cover-support {
+  fill: none;
+  stroke: var(--bt-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+#brian-backend-trace .cover-branch {
+  opacity: 0.85;
+}
+#brian-backend-trace .cover-support {
+  stroke-dasharray: 3 5;
+  opacity: 0.85;
+}
+#brian-backend-trace .cover-detail-nodes circle {
+  fill: var(--bt-base);
+  stroke: var(--bt-signal);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+}
+#brian-backend-trace .cover-stations {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+#brian-backend-trace .cover-stations::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  right: 16px;
+  border-top: 1px solid var(--bt-line);
+}
+#brian-backend-trace .is-route-ready .cover-stations::before {
+  display: none;
+}
+#brian-backend-trace .cover-station-content,
+#brian-backend-trace .cover-integrations-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--bt-secondary);
+}
+#brian-backend-trace .cover-station {
+  justify-self: center;
+}
+#brian-backend-trace .cover-station-label {
+  background: var(--bt-base);
+  padding-inline: 3px;
+}
+#brian-backend-trace .cover-integrations {
+  position: relative;
+  width: max-content;
+  margin: 18px 0 0 auto;
+}
+#brian-backend-trace .is-expanded .cover-integrations {
+  height: 0;
+  margin-top: 0;
+}
+#brian-backend-trace .cover-infrastructure {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  margin-top: 22px;
+}
+#brian-backend-trace .cover-infrastructure::before {
+  content: "";
+  position: absolute;
+  inset-inline: 24px 16px;
+  border-top: 1px dashed var(--bt-line);
+}
+#brian-backend-trace .is-route-ready .cover-infrastructure::before {
+  display: none;
+}
+#brian-backend-trace .cover-infrastructure-content {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-inline: 10px;
+  background: var(--bt-base);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--bt-secondary);
+}
+#brian-backend-trace .cover-station:first-child {
+  justify-self: start;
+}
+#brian-backend-trace .cover-station:last-child {
+  justify-self: end;
+}
+#brian-backend-trace .cover-junction {
+  display: block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  aspect-ratio: 1;
+  border: 1px solid var(--bt-signal);
+  border-radius: 50%;
+  background: var(--bt-base);
+}
+#brian-backend-trace .cover-packet,
+#brian-backend-trace .cover-packet-tail {
+  opacity: 0;
+  fill: var(--bt-signal);
+}
+#brian-backend-trace .is-signal-running .cover-packet {
+  opacity: 1;
+}
+#brian-backend-trace .is-signal-running .cover-packet-tail {
+  opacity: 0.13;
+}
+#brian-backend-trace .trace-role {
+  color: var(--bt-secondary);
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+#brian-backend-trace h1 {
+  font:
+    600 clamp(64px, 9.7vw, 112px)/0.92 "Chakra Petch",
+    sans-serif;
+  letter-spacing: -6px;
+  text-wrap: balance;
+}
+#brian-backend-trace .trace-intro {
+  padding: 0 0 2px 18px;
+  width: 100%;
+  max-width: 360px;
+  justify-self: end;
+}
+#brian-backend-trace .trace-intro-rule {
+  display: block;
+  width: 31px;
+  height: 3px;
+  background: var(--bt-signal);
+  margin-bottom: 21px;
+}
+#brian-backend-trace .trace-intro h2 {
+  font:
+    500 24px/1.25 "Chakra Petch",
+    sans-serif;
+  letter-spacing: -0.5px;
+}
+#brian-backend-trace .trace-intro p {
+  font-size: 13px;
+  color: var(--bt-secondary);
+  line-height: 1.7;
+  margin-top: 15px;
+  max-width: 34ch;
+}
+#brian-backend-trace .trace-cover-foot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  border-top: 1px solid var(--bt-line);
+  padding: 17px 0;
+  font-size: 11px;
+  color: var(--bt-secondary);
+}
+#brian-backend-trace .trace-foot-location {
+  margin-left: auto;
+}
+#brian-backend-trace .trace-work {
+  padding: 56px 44px 0;
+}
+#brian-backend-trace .trace-section-heading {
+  display: flex;
+  gap: 28px;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 28px;
+}
+#brian-backend-trace .trace-section-heading h2,
+#brian-backend-trace .trace-skills h2 {
+  font:
+    500 32px/1.08 "Chakra Petch",
+    sans-serif;
+  letter-spacing: -1px;
+  text-wrap: balance;
+}
+#brian-backend-trace .trace-section-heading p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--bt-secondary);
+}
+#brian-backend-trace .trace-career {
+  border-top: 1px solid var(--bt-line);
+}
+#brian-backend-trace .trace-job {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 30px;
+  padding: 30px 0 32px;
+  border-bottom: 1px solid var(--bt-line);
+}
+#brian-backend-trace .trace-job-period {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  align-self: start;
+  padding-top: 9px;
+  color: var(--bt-secondary);
+  font-size: 11px;
+}
+#brian-backend-trace .trace-job-dot {
+  height: 7px;
+  width: 7px;
+  border: 1px solid var(--bt-line);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+#brian-backend-trace .trace-job-current .trace-job-dot {
+  background: var(--bt-signal);
+  border-color: var(--bt-signal);
+}
+#brian-backend-trace .trace-job-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin-bottom: 15px;
+}
+#brian-backend-trace .trace-job-heading h3 {
+  font:
+    500 26px/1.2 "Chakra Petch",
+    sans-serif;
+  letter-spacing: -0.5px;
+}
+#brian-backend-trace .trace-job-role {
+  font-size: 13px;
+  color: var(--bt-secondary);
+  margin-left: auto;
+}
+#brian-backend-trace .trace-job-body > p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--bt-secondary);
+  max-width: 70ch;
+}
+#brian-backend-trace .trace-company-name {
+  display: block;
+  font-size: 12px;
+  color: var(--bt-secondary);
+  margin: -6px 0 16px;
+}
+#brian-backend-trace .trace-job-body ul {
+  list-style: disc;
+  margin: 17px 0 0;
+  padding-left: 17px;
+  font-size: 13px;
+  line-height: 1.75;
+  max-width: 74ch;
+}
+#brian-backend-trace .trace-job-body li + li {
+  margin-top: 7px;
+}
+#brian-backend-trace .trace-job-body li::marker {
+  color: var(--bt-secondary);
+}
+#brian-backend-trace .trace-job-context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 20px;
+  color: var(--bt-secondary);
+  font-size: 11px;
+  margin-top: 21px;
+}
+#brian-backend-trace .trace-skills {
+  padding: 54px 44px 48px;
+}
+#brian-backend-trace .trace-skill-matrix {
+  border-top: 1px solid var(--bt-line);
+}
+#brian-backend-trace .trace-skill-area {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 30px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--bt-line);
+}
+#brian-backend-trace .trace-skill-area h3 {
+  font:
+    500 18px/1.35 "Chakra Petch",
+    sans-serif;
+  max-width: 18ch;
+}
+#brian-backend-trace .trace-tool-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+#brian-backend-trace .trace-tool-list li {
+  min-width: 0;
+}
+#brian-backend-trace .trace-skill-area p {
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--bt-secondary);
+  max-width: 72ch;
+  margin-top: 12px;
+}
+#brian-backend-trace .trace-email {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  font-size: 13px;
+}
+#brian-backend-trace .trace-email svg {
+  width: 18px;
+  height: 18px;
+  color: var(--bt-signal);
+}
+#brian-backend-trace .trace-github {
+  font-size: 12px;
+  color: var(--bt-secondary);
+}
+@media (max-width: 800px) {
+  #brian-backend-trace .trace-nav {
+    padding-inline: 28px;
+  }
+  #brian-backend-trace .trace-cover {
+    padding: 40px 28px 0;
+  }
+  #brian-backend-trace .trace-cover-heading {
+    gap: 25px;
+    grid-template-columns: 1.1fr 1fr;
+  }
+  #brian-backend-trace h1 {
+    font-size: 80px;
+    letter-spacing: -5px;
+  }
+  #brian-backend-trace .trace-intro {
+    padding-left: 0;
+  }
+  #brian-backend-trace .trace-intro h2 {
+    font-size: 21px;
+  }
+  #brian-backend-trace .trace-work {
+    padding: 44px 28px 0;
+  }
+  #brian-backend-trace .trace-job {
+    grid-template-columns: 125px minmax(0, 1fr);
+    gap: 23px;
+  }
+  #brian-backend-trace .trace-job-role {
+    margin-left: 0;
+  }
+  #brian-backend-trace .trace-skills {
+    padding: 42px 28px;
+  }
+  #brian-backend-trace .trace-skill-area {
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 23px;
+  }
+}
+@media (max-width: 720px) {
+  #brian-backend-trace .trace-cover-heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    padding-bottom: 30px;
+  }
+  #brian-backend-trace .trace-identity {
+    min-width: 0;
+  }
+  #brian-backend-trace h1 {
+    font-size: clamp(52px, 21vw, 102px);
+    letter-spacing: -4px;
+  }
+  #brian-backend-trace .trace-intro {
+    min-width: 0;
+    max-width: 100%;
+    justify-self: start;
+  }
+  #brian-backend-trace .trace-intro-rule {
+    display: none;
+  }
+  #brian-backend-trace .trace-intro h2 {
+    font-size: 23px;
+  }
+  #brian-backend-trace .trace-intro p {
+    max-width: 40ch;
+  }
+}
+@media (max-width: 600px) {
+  #brian-backend-trace .trace-nav {
+    gap: 12px;
+    min-height: 70px;
+    padding: 18px 22px;
+  }
+  #brian-backend-trace .trace-nav-caption {
+    display: none;
+  }
+  #brian-backend-trace .trace-nav nav {
+    gap: 12px;
+    font-size: 11px;
+  }
+  #brian-backend-trace .trace-nav nav a {
+    min-height: 44px;
+  }
+  #brian-backend-trace .trace-cover {
+    padding: 32px 22px 0;
+  }
+  #brian-backend-trace .trace-cover-foot {
+    gap: 12px 18px;
+    font-size: 10px;
+  }
+  #brian-backend-trace .trace-foot-location {
+    margin-left: 0;
+  }
+  #brian-backend-trace .trace-work {
+    padding: 36px 22px 0;
+  }
+  #brian-backend-trace .trace-section-heading {
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+  }
+  #brian-backend-trace .trace-section-heading h2,
+  #brian-backend-trace .trace-skills h2 {
+    font-size: 30px;
+  }
+  #brian-backend-trace .trace-section-heading p br {
+    display: none;
+  }
+  #brian-backend-trace .trace-job {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+    padding: 25px 0 27px;
+  }
+  #brian-backend-trace .trace-job-period {
+    padding-top: 0;
+  }
+  #brian-backend-trace .trace-job-heading {
+    gap: 7px;
+    flex-direction: column;
+    align-items: start;
+  }
+  #brian-backend-trace .trace-job-heading h3 {
+    font-size: 25px;
+  }
+  #brian-backend-trace .trace-job-body > p {
+    font-size: 13px;
+  }
+  #brian-backend-trace .trace-job-context {
+    gap: 8px 15px;
+  }
+  #brian-backend-trace .trace-skills {
+    padding: 35px 22px;
+  }
+  #brian-backend-trace .trace-skill-area {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+    padding: 22px 0;
+  }
+  #brian-backend-trace .trace-skill-area h3 {
+    max-width: none;
+  }
+  #brian-backend-trace .trace-tool-list {
+    font-size: 13px;
+    gap: 8px 18px;
+  }
+  #brian-backend-trace .trace-email {
+    margin-left: 0;
+    min-height: 44px;
+  }
+  #brian-backend-trace .trace-github {
+    margin-left: auto;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+@media (max-width: 380px) {
+  #brian-backend-trace .trace-nav {
+    padding-inline: 18px;
+    gap: 8px;
+  }
+  #brian-backend-trace .trace-nav nav {
+    gap: 8px;
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #brian-backend-trace .cover-packet,
+  #brian-backend-trace .cover-packet-tail {
+    display: none;
+  }
+}
+
+#brian-backend-trace .trace-nav a[aria-current="location"] {
+  color: var(--bt-signal);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+#brian-backend-trace .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+#brian-backend-trace .hero-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 140px;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+#brian-backend-trace .hero-action svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+#brian-backend-trace .hero-action-primary {
+  background: var(--bt-signal);
+  color: var(--bt-base);
+  border-color: var(--bt-signal);
+}
+
+#brian-backend-trace .hero-action-primary:hover {
+  background: #9be4d2;
+  border-color: #9be4d2;
+  color: var(--bt-base);
+}
+
+#brian-backend-trace .hero-action-secondary {
+  background: var(--bt-base);
+  color: var(--bt-text);
+  border-color: #667c88;
+}
+
+#brian-backend-trace .hero-action-secondary:hover {
+  background: var(--bt-equipment);
+  border-color: var(--bt-signal);
+  color: var(--bt-signal);
+}
+
+@media (max-width: 380px) {
+  #brian-backend-trace .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #brian-backend-trace .hero-action {
+    flex-basis: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #brian-backend-trace .hero-action {
+    transition: none;
+  }
+}
+
+#brian-backend-trace .contact-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 64px;
+  padding: 48px 44px;
+  border-top: 1px solid var(--bt-line);
+  background: var(--bt-equipment);
+}
+
+#brian-backend-trace .contact-kicker {
+  font-size: 12px;
+  color: var(--bt-secondary);
+  margin-bottom: 20px;
+}
+
+#brian-backend-trace .contact-intro h2 {
+  font:
+    500 48px/1.08 "Chakra Petch",
+    sans-serif;
+  letter-spacing: -1.5px;
+  text-wrap: balance;
+}
+
+#brian-backend-trace .contact-intro > p:not(.contact-kicker) {
+  max-width: 31ch;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--bt-secondary);
+  margin-top: 20px;
+}
+
+#brian-backend-trace .contact-email,
+#brian-backend-trace .contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 13px;
+}
+
+#brian-backend-trace .contact-email {
+  margin-top: 16px;
+  overflow-wrap: anywhere;
+}
+
+#brian-backend-trace .contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: 5px;
+  color: var(--bt-secondary);
+}
+
+#brian-backend-trace .contact-section svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--bt-signal);
+}
+
+#brian-backend-trace .contact-form {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+
+#brian-backend-trace .contact-field {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+}
+
+#brian-backend-trace .contact-field label {
+  font-size: 13px;
+}
+
+#brian-backend-trace .contact-field :is(input, textarea) {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 13px;
+  border: 1px solid #667c88;
+  border-radius: 3px;
+  background: var(--bt-base);
+  color: var(--bt-text);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+#brian-backend-trace .contact-field :is(input, textarea):hover {
+  border-color: var(--bt-secondary);
+}
+
+#brian-backend-trace .contact-field :is(input, textarea):focus-visible {
+  outline: 2px solid var(--bt-signal);
+  outline-offset: 3px;
+}
+
+#brian-backend-trace .contact-field textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+#brian-backend-trace .contact-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  justify-self: start;
+  min-height: 44px;
+  padding: 12px 18px;
+  border: 1px solid var(--bt-signal);
+  border-radius: 3px;
+  background: var(--bt-signal);
+  color: var(--bt-base);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+#brian-backend-trace .contact-submit svg {
+  color: currentColor;
+}
+
+#brian-backend-trace .contact-submit:hover:not(:disabled) {
+  background: #9ae5d0;
+}
+
+#brian-backend-trace .contact-submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+#brian-backend-trace .contact-status {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--bt-secondary);
+}
+
+#brian-backend-trace .contact-status[data-state="success"] {
+  color: var(--bt-signal);
+}
+
+#brian-backend-trace .contact-status[data-state="error"] {
+  color: var(--bt-error);
+}
+
+#brian-backend-trace .contact-noscript {
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+#brian-backend-trace .contact-noscript a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#brian-backend-trace .site-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 44px;
+  border-top: 1px solid var(--bt-line);
+  color: var(--bt-secondary);
+  font-size: 12px;
+}
+
+#brian-backend-trace .footer-location {
+  margin-left: 18px;
+}
+
+#brian-backend-trace .site-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+}
+
+#brian-backend-trace .site-footer svg {
+  width: 15px;
+  height: 15px;
+  color: var(--bt-signal);
+}
+
+@media (max-width: 800px) {
+  #brian-backend-trace .contact-section {
+    padding-inline: 28px;
+    gap: 35px;
+  }
+  #brian-backend-trace .site-footer {
+    padding-inline: 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  #brian-backend-trace .contact-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    padding: 34px 22px;
+  }
+  #brian-backend-trace .contact-intro h2 {
+    font-size: 38px;
+  }
+  #brian-backend-trace .site-footer {
+    padding: 16px 22px;
+    font-size: 11px;
+  }
+  #brian-backend-trace .site-footer > span {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  #brian-backend-trace .footer-location {
+    margin-left: 0;
   }
 }
